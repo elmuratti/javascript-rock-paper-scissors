@@ -1,47 +1,56 @@
-// counter
-let counterHuman = 0;
-let counterComputer = 0;
-
-// Auswahl Computer
+// Computer Choice
 const getComputerChoice = () => {
     const number = Math.random();
     if (number <= 0.3333) {
         return 'rock';
-    }  else if (number > 0.3333 && number <= 0.6666 ){
+    }  else if (number <= 0.6666 ){
         return 'paper';
         } else {
             return 'scissors';
         }
 }
 
+// Score start
 
+let humanScore = 0;
+let computerScore = 0;
 
+// playRound
+const playRound = () => {
+    const computerChoice = getComputerChoice();
+    const getHumanChoice = prompt('your turn: rock, paper or scissors', '' ).trim().toLowerCase();
 
-
-
-// Challenge
-const challenge = () => {
-
-// Auswahl Mensch 
-const getHumanChoice = prompt('your turn: rock, paper or scissors', '' );
-const computerChoice = getComputerChoice();
-console.log('human = ' + getHumanChoice);
-console.log('computer = ' + computerChoice); 
-console.log(typeof(getHumanChoice)); 
-console.log(typeof(computerChoice));
     if (getHumanChoice === computerChoice){
-
-        return 'draw';
-    } else if ((getHumanChoice === 'scissors' && computerChoice === 'paper') || (getHumanChoice === 'rock' && computerChoice === 'scissors') || (getHumanChoice === 'paper' && computerChoice === 'rock')){
-        counterHuman++;
-        console.log('You win!')
+        console.log('Draw! ' + getHumanChoice + ' vs ' + computerChoice);
+    } else if (
+        (getHumanChoice === 'scissors' && computerChoice === 'paper') || 
+        (getHumanChoice === 'rock' && computerChoice === 'scissors') || 
+        (getHumanChoice === 'paper' && computerChoice === 'rock')
+    ) {
+        humanScore++;
+        console.log('You win! ' + getHumanChoice + ' beats ' + computerChoice);
     } else {
-        counterComputer++
-        console.log('Computer wins!')
+        computerScore++
+        console.log('Computer wins!'  + computerChoice + ' beats ' + getHumanChoice)
     }
-    return 'Human Score ' + counterHuman + ' Computer Score '  + counterComputer;
+    console.log('New Score: ' + 'Human Score ' + humanScore + ' Computer Score '  + computerScore);
 }
 
-console.log(challenge())
-console.log('Final - Human: ' + counterHuman + ', Computer: ' + counterComputer);
 
+const playGame = () => {
+    playRound();
+    playRound();
+    playRound();
+    playRound();
+    playRound();
+
+    if (humanScore === computerScore) {
+        console.log ('No One wins. Your choices was 5 x Draw! Try Again!');
+    } else if (humanScore > computerScore){
+        console.log('You win ' + humanScore + ' : ' + computerScore);
+    } else {
+        console.log('You loose '+ humanScore + ' : ' + computerScore);
+    }
+}
+
+console.log(playGame());
